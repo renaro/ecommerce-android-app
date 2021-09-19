@@ -8,11 +8,12 @@ import kotlinx.coroutines.launch
 
 class ProductListViewModel : ViewModel() {
 
+    private val repository = ProductRepository()
+
     private val _viewState = MutableLiveData<ProductListViewState>()
     val viewState: LiveData<ProductListViewState>
         get() = _viewState
 
-    private val repository = ProductRepository()
 
     fun loadProductList() {
         viewModelScope.launch {
