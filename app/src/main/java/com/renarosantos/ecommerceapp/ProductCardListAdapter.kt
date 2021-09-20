@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.renarosantos.ecommerceapp.databinding.ProductCardBinding
 
-class ProductCardListAdapter : RecyclerView.Adapter<ProductCardListAdapter.ViewHolder>() {
+class ProductCardListAdapter(val onItemClicked: (ProductCardViewState) -> Unit) : RecyclerView.Adapter<ProductCardListAdapter.ViewHolder>() {
 
 
     private var data: List<ProductCardViewState> = emptyList()
@@ -34,9 +34,12 @@ class ProductCardListAdapter : RecyclerView.Adapter<ProductCardListAdapter.ViewH
         this.data = productList
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(productCardViewState: ProductCardViewState) {
             val bind = ProductCardBinding.bind(itemView)
+            itemView.setOnClickListener {
+                onItemClicked(productCardViewState)
+            }
             bind.apply {
                 viewProductName.text = productCardViewState.title
                 viewProductDescription.text = productCardViewState.description
