@@ -2,8 +2,11 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'kotlin-kapt'
 
 sourceSets {
     main {
@@ -68,5 +71,15 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
 
+    // HILT
+    implementation("com.google.dagger:hilt-android:2.38.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
+
+
     kapt("androidx.lifecycle:lifecycle-compiler:2.3.1")
+}
+
+kapt {
+    correctErrorTypes true
 }
