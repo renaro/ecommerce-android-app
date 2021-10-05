@@ -15,7 +15,9 @@ import com.renarosantos.ecommerceapp.ProductCardViewState
 import com.renarosantos.ecommerceapp.ProductListViewModel
 import com.renarosantos.ecommerceapp.ProductListViewState
 import com.renarosantos.ecommerceapp.databinding.ProductListFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductListFragment : Fragment() {
     private lateinit var binding: ProductListFragmentBinding
     private val viewModel: ProductListViewModel by viewModels()
