@@ -1,9 +1,8 @@
-package com.renarosantos.ecommerceapp.data.repository.api
+package com.renarosantos.ecommerceapp.shared.data.repository.api
 
-import com.renarosantos.ecommerceapp.business.Product
-import com.renarosantos.ecommerceapp.presentation.viewstate.ProductCardViewState
-import com.renarosantos.ecommerceapp.business.ProductDetails
-import com.renarosantos.ecommerceapp.data.repository.ProductRepository
+import com.renarosantos.ecommerceapp.product_list.business.Product
+import com.renarosantos.ecommerceapp.product_details.business.ProductDetails
+import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

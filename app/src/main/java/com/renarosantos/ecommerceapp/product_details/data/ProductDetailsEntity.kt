@@ -1,4 +1,4 @@
-package com.renarosantos.ecommerceapp.data.entities
+package com.renarosantos.ecommerceapp.product_details.data
 
 data class ProductDetailsEntity(
     val title: String,

@@ -1,4 +1,4 @@
-package com.renarosantos.ecommerceapp.presentation.view
+package com.renarosantos.ecommerceapp.shared.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

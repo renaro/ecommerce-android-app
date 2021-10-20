@@ -1,9 +1,9 @@
 package com.renarosantos.ecommerceapp.di
 
-import com.renarosantos.ecommerceapp.data.repository.api.ApiClient
-import com.renarosantos.ecommerceapp.data.repository.ProductRepository
-import com.renarosantos.ecommerceapp.data.repository.api.ProductRepositoryAPI
-import com.renarosantos.ecommerceapp.data.repository.api.ProductService
+import com.renarosantos.ecommerceapp.shared.data.repository.api.ApiClient
+import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
+import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductRepositoryAPI
+import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
