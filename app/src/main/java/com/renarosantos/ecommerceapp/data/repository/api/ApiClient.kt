@@ -1,4 +1,4 @@
-package com.renarosantos.ecommerceapp
+package com.renarosantos.ecommerceapp.data.repository.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,4 +1,4 @@
-package com.renarosantos.ecommerceapp.view
+package com.renarosantos.ecommerceapp.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
-import com.renarosantos.ecommerceapp.ProductDetailsViewModel
-import com.renarosantos.ecommerceapp.ProductDetailsViewState
-import com.renarosantos.ecommerceapp.ProductListViewModel
+import com.renarosantos.ecommerceapp.presentation.ProductDetailsViewModel
+import com.renarosantos.ecommerceapp.presentation.viewstate.ProductDetailsViewState
 import com.renarosantos.ecommerceapp.databinding.ProductDetailsFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 

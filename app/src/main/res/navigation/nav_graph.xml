@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/productListFragment"
-        android:name="com.renarosantos.ecommerceapp.view.ProductListFragment"
+        android:name="com.renarosantos.ecommerceapp.presentation.view.ProductListFragment"
         android:label="ProductListFragment" >
         <action
             android:id="@+id/action_productListFragment_to_productDetailsFragment"
@@ -14,6 +14,6 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="com.renarosantos.ecommerceapp.view.ProductDetailsFragment"
+        android:name="com.renarosantos.ecommerceapp.presentation.view.ProductDetailsFragment"
         android:label="ProductDetailsFragment" />
 </navigation>

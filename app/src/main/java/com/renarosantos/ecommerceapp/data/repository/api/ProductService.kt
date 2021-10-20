@@ -1,5 +1,7 @@
-package com.renarosantos.ecommerceapp
+package com.renarosantos.ecommerceapp.data.repository.api
 
+import com.renarosantos.ecommerceapp.data.entities.ProductDetailsEntity
+import com.renarosantos.ecommerceapp.data.entities.ProductEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 
