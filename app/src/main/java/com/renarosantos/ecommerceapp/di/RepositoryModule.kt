@@ -4,6 +4,8 @@ import com.renarosantos.ecommerceapp.shared.data.repository.api.ApiClient
 import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductRepositoryAPI
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductService
+import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistDatabaseRepository
+import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +27,9 @@ class RepositoryModule {
     fun providesProductRepository(
         productRepositoryAPI: ProductRepositoryAPI
     ): ProductRepository = productRepositoryAPI
+
+    @Provides
+    fun providesWishlistRepository(
+        databaseRepository: WishlistDatabaseRepository
+    ) : WishlistRepository = databaseRepository
 }
