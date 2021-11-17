@@ -76,13 +76,13 @@
             android:text="Buy it!"
             />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/view_wishlist_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:padding="4dp"
-            android:background="#1aaa1a"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:padding="8dp"
+            android:background="@drawable/border"
             android:src="@drawable/ic_baseline_favorite"
             app:layout_constraintBottom_toBottomOf="@+id/buyButton"
             app:layout_constraintEnd_toStartOf="@id/buyButton"

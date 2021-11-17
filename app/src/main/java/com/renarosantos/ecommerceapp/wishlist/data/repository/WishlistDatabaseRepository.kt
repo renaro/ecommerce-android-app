@@ -5,7 +5,7 @@ import javax.inject.Inject
 class WishlistDatabaseRepository @Inject constructor() : WishlistRepository {
 
     override fun isFavorite(productId: String): Boolean {
-        return false
+        return true
     }
 
     override fun addToWishlist(productId: String) {
