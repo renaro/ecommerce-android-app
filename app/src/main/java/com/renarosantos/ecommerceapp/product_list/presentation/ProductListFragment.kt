@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductListFragment : Fragment() {
     private lateinit var binding: ProductListFragmentBinding
     private val viewModel: ProductListViewModel by viewModels()
-    private val adapter = ProductCardListAdapter(::onItemClicked)
+    private val adapter = ProductCardListAdapter(::onItemClicked, ::onFavoriteIconClicked)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,5 +62,9 @@ class ProductListFragment : Fragment() {
     // parameter just to show how to retrieve data from Adapter to the fragment
     private fun onItemClicked(viewState: ProductCardViewState) {
         findNavController().navigate(ProductListFragmentDirections.actionProductListFragmentToProductDetailsFragment())
+    }
+
+    private fun onFavoriteIconClicked(viewState: ProductCardViewState){
+        viewModel.favoriteIconClicked(viewState.id)
     }
 }
