@@ -1,7 +1,6 @@
-package com.renarosantos.ecommerceapp.wishlist.data.repository
+package com.renarosantos.ecommerceapp.wishlist.data.repository.database
 
-import com.renarosantos.ecommerceapp.wishlist.data.repository.database.FavoriteProductEntity
-import com.renarosantos.ecommerceapp.wishlist.data.repository.database.WishListDAO
+import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

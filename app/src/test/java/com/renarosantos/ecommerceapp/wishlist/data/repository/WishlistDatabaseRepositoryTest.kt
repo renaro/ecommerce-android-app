@@ -2,6 +2,7 @@ package com.renarosantos.ecommerceapp.wishlist.data.repository
 
 import com.renarosantos.ecommerceapp.wishlist.data.repository.database.FavoriteProductEntity
 import com.renarosantos.ecommerceapp.wishlist.data.repository.database.WishListDAO
+import com.renarosantos.ecommerceapp.wishlist.data.repository.database.WishlistDatabaseRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

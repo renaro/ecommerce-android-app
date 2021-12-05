@@ -6,10 +6,11 @@ import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ApiClient
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductRepositoryAPI
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductService
-import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistDatabaseRepository
 import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistRepository
 import com.renarosantos.ecommerceapp.wishlist.data.repository.database.AppDatabase
 import com.renarosantos.ecommerceapp.wishlist.data.repository.database.WishListDAO
+import com.renarosantos.ecommerceapp.wishlist.data.repository.database.WishlistDatabaseRepository
+import com.renarosantos.ecommerceapp.wishlist.data.repository.sharedprefs.WishlistSharedPrefRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,12 +36,17 @@ class RepositoryModule {
 
     @Provides
     fun providesWishlistRepository(
-        databaseRepository: WishlistDatabaseRepository
-    ): WishlistRepository = databaseRepository
+        sharedPrefRepo: WishlistSharedPrefRepo
+    ): WishlistRepository = sharedPrefRepo
 
     @Provides
     fun providesWishlistDatabaseRepository(databaseDAO: WishListDAO): WishlistDatabaseRepository {
         return WishlistDatabaseRepository(databaseDAO)
+    }
+
+    @Provides
+    fun providesWishListSharedPrefRepo(@ApplicationContext context: Context): WishlistSharedPrefRepo {
+        return WishlistSharedPrefRepo(context)
     }
 
     @Provides
