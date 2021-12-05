@@ -1,7 +1,7 @@
 package com.renarosantos.ecommerceapp.shared.data.repository.api
 
-import com.renarosantos.ecommerceapp.product_list.business.Product
 import com.renarosantos.ecommerceapp.product_details.business.ProductDetails
+import com.renarosantos.ecommerceapp.product_list.business.Product
 import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
