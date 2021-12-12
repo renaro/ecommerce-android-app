@@ -8,6 +8,8 @@ import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
 import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +17,8 @@ import javax.inject.Inject
 class ProductListViewModel @Inject constructor(
     private val repository: ProductRepository,
     private val isProductInWishListUseCase: IsProductInWishListUseCase,
-    private val addOrRemoveFromWishListUseCase: AddOrRemoveFromWishListUseCase
+    private val addOrRemoveFromWishListUseCase: AddOrRemoveFromWishListUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ProductListViewState>()
@@ -24,7 +27,7 @@ class ProductListViewModel @Inject constructor(
 
 
     fun loadProductList() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             _viewState.postValue(ProductListViewState.Loading)
             // Data call to fetch products
             val productList = repository.getProductList()
@@ -45,7 +48,7 @@ class ProductListViewModel @Inject constructor(
     }
 
     fun favoriteIconClicked(productId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             addOrRemoveFromWishListUseCase.execute(productId)
             val currentViewState = _viewState.value
             (currentViewState as? ProductListViewState.Content)?.let { content ->
