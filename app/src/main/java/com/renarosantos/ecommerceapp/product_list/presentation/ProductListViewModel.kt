@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
+import com.renarosantos.ecommerceapp.cart.business.CartRepository
+import com.renarosantos.ecommerceapp.shared.business.ProductRepository
+import com.renarosantos.ecommerceapp.shared.presentation.SingleLiveEvent
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
 import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,12 +20,16 @@ class ProductListViewModel @Inject constructor(
     private val repository: ProductRepository,
     private val isProductInWishListUseCase: IsProductInWishListUseCase,
     private val addOrRemoveFromWishListUseCase: AddOrRemoveFromWishListUseCase,
+    private val cartRepository: CartRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ProductListViewState>()
     val viewState: LiveData<ProductListViewState>
         get() = _viewState
+
+    // Can be used for navigation/snackbar/toast/etc...
+    val singleEvents = SingleLiveEvent<AddToCartEvent>()
 
 
     fun loadProductList() {
@@ -61,4 +67,13 @@ class ProductListViewModel @Inject constructor(
             }
         }
     }
+
+    fun onBuyClicked(id: String) {
+        viewModelScope.launch(dispatcher) {
+            val addToCartResult = cartRepository.addToCart(id)
+            singleEvents.postValue(AddToCartEvent(addToCartResult is CartRepository.AddToCartResult.Success))
+        }
+    }
+
+    data class AddToCartEvent(val isSuccess: Boolean)
 }

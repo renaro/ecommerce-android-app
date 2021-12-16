@@ -1,6 +1,5 @@
 package com.renarosantos.ecommerceapp.wishlist.business
 
-import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

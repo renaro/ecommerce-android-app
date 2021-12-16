@@ -2,7 +2,7 @@ package com.renarosantos.ecommerceapp.product_list.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.renarosantos.ecommerceapp.product_list.business.Product
-import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
+import com.renarosantos.ecommerceapp.shared.business.ProductRepository
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
 import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCase
 import io.mockk.coEvery

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.renarosantos.ecommerceapp.databinding.ProductListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProductListFragment : Fragment() {
     private lateinit var binding: ProductListFragmentBinding
     private val viewModel: ProductListViewModel by viewModels()
-    private val adapter = ProductCardListAdapter(::onItemClicked, ::onFavoriteIconClicked)
+    private val adapter =
+        ProductCardListAdapter(::onItemClicked, ::onFavoriteIconClicked, ::onBuyItCLicked)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +37,20 @@ class ProductListFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             updateUI(viewState)
         }
+        viewModel.singleEvents.observeEvent(viewLifecycleOwner) {
+            it?.let {
+                updateUiForEvent(it)
+            }
+        }
         viewModel.loadProductList()
+    }
+
+    private fun updateUiForEvent(it: ProductListViewModel.AddToCartEvent) {
+        if(it.isSuccess){
+            Snackbar.make(binding.coordinator, "Product added to the cart!", Snackbar.LENGTH_SHORT).show()
+        } else {
+            Snackbar.make(binding.coordinator, "Product already in the cart!", Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun updateUI(viewState: ProductListViewState) {
@@ -64,7 +79,11 @@ class ProductListFragment : Fragment() {
         findNavController().navigate(ProductListFragmentDirections.actionProductListFragmentToProductDetailsFragment())
     }
 
-    private fun onFavoriteIconClicked(viewState: ProductCardViewState){
+    private fun onBuyItCLicked(viewState: ProductCardViewState) {
+        viewModel.onBuyClicked(viewState.id)
+    }
+
+    private fun onFavoriteIconClicked(viewState: ProductCardViewState) {
         viewModel.favoriteIconClicked(viewState.id)
     }
 }

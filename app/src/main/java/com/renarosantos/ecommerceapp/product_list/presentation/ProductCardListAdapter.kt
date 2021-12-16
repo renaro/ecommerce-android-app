@@ -12,7 +12,8 @@ import com.renarosantos.ecommerceapp.databinding.ProductCardBinding
 
 class ProductCardListAdapter(
     val onItemClicked: (ProductCardViewState) -> Unit,
-    val onFavoriteIconClicked: (ProductCardViewState) -> Unit
+    val onFavoriteIconClicked: (ProductCardViewState) -> Unit,
+    val onBuyCLicked: (ProductCardViewState) -> Unit,
 ) : RecyclerView.Adapter<ProductCardListAdapter.ViewHolder>() {
 
 
@@ -50,10 +51,14 @@ class ProductCardListAdapter(
                 viewProductName.text = productCardViewState.title
                 viewProductDescription.text = productCardViewState.description
                 productPrice.text = productCardViewState.price
+
                 viewWishlistIcon.setOnClickListener {
                     onFavoriteIconClicked.invoke(
                         productCardViewState
                     )
+                }
+                buyButton.setOnClickListener {
+                    onBuyCLicked.invoke(productCardViewState)
                 }
                 viewWishlistIcon.setImageDrawable(
                     if (productCardViewState.isFavorite) {

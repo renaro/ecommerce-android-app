@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/add_shopping_cart_24"
+        android:title="Cart"
+        app:actionLayout="@layout/favorite_badge_layout"
+        app:showAsAction="always" />
+
+</menu>
