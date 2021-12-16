@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
@@ -14,6 +16,7 @@ class ProductCardListAdapter(
     val onItemClicked: (ProductCardViewState) -> Unit,
     val onFavoriteIconClicked: (ProductCardViewState) -> Unit,
     val onBuyCLicked: (ProductCardViewState) -> Unit,
+    val onRemoveClicked: (ProductCardViewState) -> Unit,
 ) : RecyclerView.Adapter<ProductCardListAdapter.ViewHolder>() {
 
 
@@ -60,6 +63,11 @@ class ProductCardListAdapter(
                 buyButton.setOnClickListener {
                     onBuyCLicked.invoke(productCardViewState)
                 }
+                removeButton.setOnClickListener {
+                    onRemoveClicked.invoke(productCardViewState)
+                }
+                buyButton.isInvisible = productCardViewState.isProductInCart
+                removeButton.isInvisible = !productCardViewState.isProductInCart
                 viewWishlistIcon.setImageDrawable(
                     if (productCardViewState.isFavorite) {
                         ResourcesCompat.getDrawable(

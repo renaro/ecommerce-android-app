@@ -12,6 +12,8 @@ import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCas
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,12 +33,33 @@ class ProductListViewModel @Inject constructor(
     // Can be used for navigation/snackbar/toast/etc...
     val singleEvents = SingleLiveEvent<AddToCartEvent>()
 
+    init {
+        viewModelScope.launch {
+            cartRepository.observeChanges().collect {
+                updateViewStateForCartChanges(it)
+            }
+        }
+    }
+
+    private fun updateViewStateForCartChanges(cartItems: List<String>) {
+        (_viewState.value as? ProductListViewState.Content)?.let { content ->
+            _viewState.postValue(
+                ProductListViewState.Content(
+                    content.productList.map {
+                        it.copy(isProductInCart = cartItems.contains(it.id))
+                    }
+                )
+            )
+        }
+    }
+
 
     fun loadProductList() {
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(ProductListViewState.Loading)
             // Data call to fetch products
             val productList = repository.getProductList()
+            val productsInCart = cartRepository.observeChanges().first()
             _viewState.postValue(
                 ProductListViewState.Content(
                     productList.map {
@@ -46,7 +69,8 @@ class ProductListViewModel @Inject constructor(
                             it.description,
                             "US $ ${it.price}",
                             it.imageUrl,
-                            isProductInWishListUseCase.execute(it.productId)
+                            isProductInWishListUseCase.execute(it.productId),
+                            productsInCart.contains(it.productId)
                         )
                     }
                 ))
@@ -70,8 +94,18 @@ class ProductListViewModel @Inject constructor(
 
     fun onBuyClicked(id: String) {
         viewModelScope.launch(dispatcher) {
-            val addToCartResult = cartRepository.addToCart(id)
-            singleEvents.postValue(AddToCartEvent(addToCartResult is CartRepository.AddToCartResult.Success))
+            if (cartRepository.observeChanges().first().contains(id)) {
+                singleEvents.postValue(AddToCartEvent(false))
+            } else {
+                cartRepository.addToCart(id)
+                singleEvents.postValue(AddToCartEvent(true))
+            }
+        }
+    }
+
+    fun removeClicked(id: String) {
+        viewModelScope.launch(dispatcher) {
+            cartRepository.removeFromCart(id)
         }
     }
 

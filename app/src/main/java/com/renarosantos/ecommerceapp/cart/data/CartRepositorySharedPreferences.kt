@@ -27,20 +27,24 @@ class CartRepositorySharedPreferences(private val context: Context) : CartReposi
             }
     }
 
-    override suspend fun addToCart(productId: String): CartRepository.AddToCartResult {
-        var wasProductAdded = false
-        println("JOLO 0")
+    override suspend fun addToCart(productId: String) {
         context.dataStore.edit { preferences ->
-            println("JOLO 1")
             val currentSet = preferences[KEY_CART_SET] ?: emptySet()
             val newSet = mutableSetOf<String>()
             newSet.addAll(currentSet)
-            wasProductAdded = newSet.add(productId)
+            newSet.add(productId)
             preferences[KEY_CART_SET] = newSet
         }
-        println("JOLO 2")
-        return if (wasProductAdded) CartRepository.AddToCartResult.Success
-        else CartRepository.AddToCartResult.Error
+    }
+
+    override suspend fun removeFromCart(id: String) {
+        context.dataStore.edit { preferences ->
+            val currentSet = preferences[KEY_CART_SET] ?: emptySet()
+            val newSet = mutableSetOf<String>()
+            newSet.addAll(currentSet)
+            newSet.remove(id)
+            preferences[KEY_CART_SET] = newSet
+        }
     }
 
     companion object {

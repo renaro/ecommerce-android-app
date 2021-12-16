@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">E-commerce App</string>
+    <string name="buy_it">Buy it!</string>
+    <string name="remove">Remove</string>
 </resources>

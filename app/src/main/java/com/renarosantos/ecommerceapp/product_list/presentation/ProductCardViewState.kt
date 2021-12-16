@@ -6,5 +6,6 @@ data class ProductCardViewState(
     val description: String,
     val price: String,
     val imageUrl : String,
-    val isFavorite : Boolean
+    val isFavorite : Boolean,
+    val isProductInCart : Boolean
 )
