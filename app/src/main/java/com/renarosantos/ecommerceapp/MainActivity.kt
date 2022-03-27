@@ -19,26 +19,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.viewProductList.layoutManager= LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.viewProductList.adapter = adapter
-        updateUI(ProductListViewState.Content((1..3).map {
-            ProductCardViewState("Playstation $it", "This is a nice console! Check it out", "200 US$")
-        }))
+//        updateUI(ProductListViewState.Content((1..3).map {
+//            ProductCardViewState("Playstation $it", "This is a nice console! Check it out", "200 US$")
+//        }))
+        // Hardcoding an error state
+        updateUI(ProductListViewState.Error("Network not available"))
     }
 
     private fun updateUI(viewState : ProductListViewState) {
         when(viewState){
             is ProductListViewState.Content -> {
                 binding.errorView.isVisible = false
+                binding.errorTextView.isVisible = false
                 binding.loadingView.isVisible = false
                 adapter.setData(viewState.productList)
             }
-            ProductListViewState.Error -> {
+            is ProductListViewState.Error -> {
                 binding.viewProductList.isVisible = false
                 binding.errorView.isVisible = true
+                binding.errorTextView.text = viewState.errorMessage
+                binding.errorTextView.isVisible = true
                 binding.loadingView.isVisible = false
             }
             ProductListViewState.Loading -> {
                 binding.viewProductList.isVisible = false
                 binding.errorView.isVisible = false
+                binding.errorTextView.isVisible = false
                 binding.loadingView.isVisible = true
             }
         }
