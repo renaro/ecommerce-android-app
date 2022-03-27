@@ -3,12 +3,13 @@ package com.renarosantos.ecommerceapp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
+import java.lang.Thread.sleep
 
 class ProductRepository {
 
     suspend fun getProductList(): List<ProductCardViewState> {
-        return withContext(Dispatchers.IO) {
-            delay(2000)
+        return withContext(Dispatchers.Main) {
+            sleep(2000)
             (1..3).map {
                 ProductCardViewState(
                     "Playstation $it",
