@@ -1,6 +1,7 @@
 package com.renarosantos.ecommerceapp.product_list.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.renarosantos.ecommerceapp.cart.business.CartRepository
 import com.renarosantos.ecommerceapp.product_list.business.Product
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
@@ -8,6 +9,9 @@ import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCas
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -25,6 +29,7 @@ class ProductListViewModelTest {
     private lateinit var viewModel: ProductListViewModel
     private val repository = mockk<ProductRepository>()
     private val isProductInWishListUseCase = mockk<IsProductInWishListUseCase>()
+    private val cartRepository = mockk<CartRepository>()
     private val addOrRemoveUseCase = mockk<AddOrRemoveFromWishListUseCase>()
     private val listOfProducts = (0..2).map {
         Product("title", "description", 6.0, "", "id-$it")
@@ -44,6 +49,7 @@ class ProductListViewModelTest {
             repository,
             isProductInWishListUseCase,
             addOrRemoveUseCase,
+            cartRepository,
             dispatcher
         )
     }
@@ -67,10 +73,39 @@ class ProductListViewModelTest {
                             "description",
                             "US $ 6.0",
                             "",
-                            it == 1
+                            it == 1,
+                            false
                         )
                     }
                 ))
+    }
+
+    @Test
+    fun `Check if ViewState is correct for items in the cart`() = runTest {
+        val values = mutableListOf<ProductListViewState>()
+        viewModel.viewState.observeForever {
+            values.add(it)
+        }
+        coEvery { cartRepository.observeChanges() } returns flowOf(listOf("id-2"))
+        viewModel.loadProductList()
+        dispatcher.scheduler.advanceUntilIdle()
+
+        assert(values[0] is ProductListViewState.Loading)
+        assert(values[1] ==
+                ProductListViewState.Content(
+                    (0..2).map {
+                        ProductCardViewState(
+                            "id-$it",
+                            "title",
+                            "description",
+                            "US $ 6.0",
+                            "",
+                            it == 1,
+                            it == 2
+                        )
+                    }
+                ))
+
     }
 
 }

@@ -34,7 +34,7 @@ class ProductListViewModel @Inject constructor(
     val singleEvents = SingleLiveEvent<AddToCartEvent>()
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             cartRepository.observeChanges().collect {
                 updateViewStateForCartChanges(it)
             }

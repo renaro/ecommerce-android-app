@@ -14,7 +14,8 @@ class ProductListViewStateTest {
                   "",
                   "",
                   "",
-                  false
+                  isFavorite = false,
+                  isProductInCart = false
               )
             }
         )
