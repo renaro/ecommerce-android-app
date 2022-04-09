@@ -4,13 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.renarosantos.ecommerceapp.cart.business.CartRepository
 import com.renarosantos.ecommerceapp.product_list.business.Product
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
+import com.renarosantos.ecommerceapp.shared.presentation.InternationalPriceFormatter
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
 import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -50,6 +50,7 @@ class ProductListViewModelTest {
             isProductInWishListUseCase,
             addOrRemoveUseCase,
             cartRepository,
+            InternationalPriceFormatter,
             dispatcher
         )
     }
@@ -60,6 +61,7 @@ class ProductListViewModelTest {
         viewModel.viewState.observeForever {
             values.add(it)
         }
+        coEvery { cartRepository.observeChanges() } returns flowOf(emptyList())
         viewModel.loadProductList()
         dispatcher.scheduler.advanceUntilIdle()
 
@@ -71,7 +73,7 @@ class ProductListViewModelTest {
                             "id-$it",
                             "title",
                             "description",
-                            "US $ 6.0",
+                            "US $6.0",
                             "",
                             it == 1,
                             false
@@ -98,7 +100,7 @@ class ProductListViewModelTest {
                             "id-$it",
                             "title",
                             "description",
-                            "US $ 6.0",
+                            "US $6.0",
                             "",
                             it == 1,
                             it == 2

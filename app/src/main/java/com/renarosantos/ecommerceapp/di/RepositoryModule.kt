@@ -8,6 +8,8 @@ import com.renarosantos.ecommerceapp.shared.business.ProductRepository
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ApiClient
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductRepositoryAPI
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductService
+import com.renarosantos.ecommerceapp.shared.presentation.InternationalPriceFormatter
+import com.renarosantos.ecommerceapp.shared.presentation.PriceFormatter
 import com.renarosantos.ecommerceapp.wishlist.business.WishlistRepository
 import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistDatabaseRepository
 import com.renarosantos.ecommerceapp.wishlist.data.repository.database.AppDatabase
@@ -65,6 +67,12 @@ class RepositoryModule {
     @Singleton
     fun providesCartRepository(@ApplicationContext context: Context): CartRepository {
         return CartRepositorySharedPreferences(context)
+    }
+
+    @Provides
+    @Singleton
+    fun providesPriceFormatter(): PriceFormatter {
+        return InternationalPriceFormatter
     }
 
     @Provides

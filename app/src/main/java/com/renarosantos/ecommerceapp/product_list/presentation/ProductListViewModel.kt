@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renarosantos.ecommerceapp.cart.business.CartRepository
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
+import com.renarosantos.ecommerceapp.shared.presentation.PriceFormatter
 import com.renarosantos.ecommerceapp.shared.presentation.SingleLiveEvent
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
 import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCase
@@ -23,6 +24,7 @@ class ProductListViewModel @Inject constructor(
     private val isProductInWishListUseCase: IsProductInWishListUseCase,
     private val addOrRemoveFromWishListUseCase: AddOrRemoveFromWishListUseCase,
     private val cartRepository: CartRepository,
+    private val priceFormatter: PriceFormatter,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
@@ -31,7 +33,7 @@ class ProductListViewModel @Inject constructor(
         get() = _viewState
 
     // Can be used for navigation/snackbar/toast/etc...
-    val singleEvents = SingleLiveEvent<AddToCartEvent>()
+    val cartEvents = SingleLiveEvent<AddToCartEvent>()
 
     init {
         viewModelScope.launch(dispatcher) {
@@ -67,7 +69,7 @@ class ProductListViewModel @Inject constructor(
                             it.productId,
                             it.title,
                             it.description,
-                            "US $ ${it.price}",
+                            priceFormatter.format(it.price),
                             it.imageUrl,
                             isProductInWishListUseCase.execute(it.productId),
                             productsInCart.contains(it.productId)
@@ -95,10 +97,10 @@ class ProductListViewModel @Inject constructor(
     fun onBuyClicked(id: String) {
         viewModelScope.launch(dispatcher) {
             if (cartRepository.observeChanges().first().contains(id)) {
-                singleEvents.postValue(AddToCartEvent(false))
+                cartEvents.postValue(AddToCartEvent(false))
             } else {
                 cartRepository.addToCart(id)
-                singleEvents.postValue(AddToCartEvent(true))
+                cartEvents.postValue(AddToCartEvent(true))
             }
         }
     }

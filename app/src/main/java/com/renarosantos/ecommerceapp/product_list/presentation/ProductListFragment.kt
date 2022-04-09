@@ -31,13 +31,12 @@ class ProductListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewProductList.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.viewProductList.adapter = adapter
+        setupProductRecyclerView()
+
         viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             updateUI(viewState)
         }
-        viewModel.singleEvents.observeEvent(viewLifecycleOwner) {
+        viewModel.cartEvents.observeEvent(viewLifecycleOwner) {
             it?.let {
                 updateUiForEvent(it)
             }
@@ -88,5 +87,11 @@ class ProductListFragment : Fragment() {
 
     private fun onFavoriteIconClicked(viewState: ProductCardViewState) {
         viewModel.favoriteIconClicked(viewState.id)
+    }
+
+    private fun setupProductRecyclerView() {
+        binding.viewProductList.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.viewProductList.adapter = adapter
     }
 }
