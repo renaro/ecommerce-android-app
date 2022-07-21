@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    private val repository: ProductRepository
+    private val repository: ProductRepository,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ProductDetailsViewState>()
@@ -19,7 +22,7 @@ class ProductDetailsViewModel @Inject constructor(
         get() = _viewState
 
     fun loadProduct(productId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatcher) {
             _viewState.postValue(ProductDetailsViewState.Loading)
             // Data call to fetch products
             val productDetails = repository.getProductDetails(productId)
