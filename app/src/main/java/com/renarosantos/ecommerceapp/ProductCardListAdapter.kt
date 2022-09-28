@@ -8,6 +8,8 @@ import com.renarosantos.ecommerceapp.databinding.ProductCardBinding
 
 class ProductCardListAdapter : RecyclerView.Adapter<ProductCardListAdapter.ViewHolder>() {
 
+    private lateinit var data: List<ProductCardViewState>
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -18,19 +20,23 @@ class ProductCardListAdapter : RecyclerView.Adapter<ProductCardListAdapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return data.size
+    }
+
+    fun setData(data: List<ProductCardViewState>) {
+        this.data = data
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind() {
+        fun bind(viewState: ProductCardViewState) {
             val bind = ProductCardBinding.bind(itemView)
-            bind.viewProductName.text = "Product 1"
-            bind.viewProductDescription.text = "Description of product"
-            bind.productPrice.text = "100 US$"
+            bind.viewProductName.text = viewState.title
+            bind.viewProductDescription.text = viewState.description
+            bind.productPrice.text = viewState.price
         }
 
     }
