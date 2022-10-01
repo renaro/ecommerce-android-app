@@ -28,16 +28,39 @@ class ProductListViewModel @Inject constructor(
             val productList = repository.getProductList()
             _viewState.postValue(
                 ProductListViewState.Content(
-                productList.map {
-                    ProductCardViewState(
-                        it.title,
-                        it.description,
-                        "US $ ${it.price}",
-                        it.imageUrl,
-                        wishlistRepository.isFavorite(it.productId)
+                    productList.map {
+                        ProductCardViewState(
+                            it.productId,
+                            it.title,
+                            it.description,
+                            "US $ ${it.price}",
+                            it.imageUrl,
+                            wishlistRepository.isFavorite(it.productId)
+                        )
+                    }
+                ))
+        }
+    }
+
+    fun onWishListClicked(viewState: ProductCardViewState) {
+        viewModelScope.launch {
+            if (viewState.isFavorite) {
+                wishlistRepository.removeFromWishlist(viewState.id)
+            } else {
+                wishlistRepository.addToWishlist(
+                    viewState.id,
+                    viewState.title
+                )
+            }
+            val currentViewState = _viewState.value
+            (currentViewState as? ProductListViewState.Content)?.let { content ->
+                _viewState.postValue(
+                    content.updateFavoriteProduct(
+                        viewState.id,
+                        !viewState.isFavorite
                     )
-                }
-            ))
+                )
+            }
         }
     }
 }

@@ -6,10 +6,10 @@ import com.renarosantos.ecommerceapp.shared.data.repository.ProductRepository
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ApiClient
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductRepositoryAPI
 import com.renarosantos.ecommerceapp.shared.data.repository.api.ProductService
+import com.renarosantos.ecommerceapp.shared.data.repository.database.AppDatabase
+import com.renarosantos.ecommerceapp.shared.data.repository.database.WishlistDAO
 import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistDatabaseRepository
 import com.renarosantos.ecommerceapp.wishlist.data.repository.WishlistRepository
-import com.renarosantos.ecommerceapp.wishlist.data.repository.database.AppDatabase
-import com.renarosantos.ecommerceapp.wishlist.data.repository.database.WishListDAO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,18 +39,16 @@ class RepositoryModule {
     ): WishlistRepository = databaseRepository
 
     @Provides
-    fun providesWishlistDatabaseRepository(databaseDAO: WishListDAO): WishlistDatabaseRepository {
-        return WishlistDatabaseRepository(databaseDAO)
+    fun providesWishlistDatabaseRepository(wishlistDAO: WishlistDAO): WishlistDatabaseRepository {
+        return WishlistDatabaseRepository(wishlistDAO)
     }
 
     @Provides
-    fun providesWishListDAO(
-        @ApplicationContext context: Context
-    ): WishListDAO {
+    fun providesWishlistDAO(@ApplicationContext context: Context): WishlistDAO {
         val db = Room.databaseBuilder(
             context, AppDatabase::class.java,
             "ecommerce-database"
         ).build()
-        return db.wishListDao()
+        return db.getWishlistDAO()
     }
 }

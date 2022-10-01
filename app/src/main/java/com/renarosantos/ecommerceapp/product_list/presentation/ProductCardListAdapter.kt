@@ -10,7 +10,11 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.renarosantos.ecommerceapp.R
 import com.renarosantos.ecommerceapp.databinding.ProductCardBinding
 
-class ProductCardListAdapter(val onItemClicked: (ProductCardViewState) -> Unit) : RecyclerView.Adapter<ProductCardListAdapter.ViewHolder>() {
+class ProductCardListAdapter(
+    val onItemClicked: (ProductCardViewState) -> Unit,
+    val onFavoriteClicked: (ProductCardViewState) -> Unit
+) :
+    RecyclerView.Adapter<ProductCardListAdapter.ViewHolder>() {
 
 
     private var data: List<ProductCardViewState> = emptyList()
@@ -34,6 +38,7 @@ class ProductCardListAdapter(val onItemClicked: (ProductCardViewState) -> Unit) 
 
     fun setData(productList: List<ProductCardViewState>) {
         this.data = productList
+        this.notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,15 +51,22 @@ class ProductCardListAdapter(val onItemClicked: (ProductCardViewState) -> Unit) 
                 viewProductName.text = productCardViewState.title
                 viewProductDescription.text = productCardViewState.description
                 productPrice.text = productCardViewState.price
+                viewWishlistIcon.setOnClickListener {
+                    onFavoriteClicked(productCardViewState)
+                }
                 viewWishlistIcon.setImageDrawable(
-                    if(productCardViewState.isFavorite){
-                        ResourcesCompat.getDrawable(viewWishlistIcon.resources,
-                        R.drawable.ic_baseline_favorite,
-                        null)
+                    if (productCardViewState.isFavorite) {
+                        ResourcesCompat.getDrawable(
+                            viewWishlistIcon.resources,
+                            R.drawable.ic_baseline_favorite,
+                            null
+                        )
                     } else {
-                        ResourcesCompat.getDrawable(viewWishlistIcon.resources,
+                        ResourcesCompat.getDrawable(
+                            viewWishlistIcon.resources,
                             R.drawable.ic_baseline_favorite_disabled,
-                            null)
+                            null
+                        )
                     }
                 )
                 Glide.with(productImage)
