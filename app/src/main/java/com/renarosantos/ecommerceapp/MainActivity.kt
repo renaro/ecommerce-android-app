@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private val adapter = ProductCardListAdapter()
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel = ProductListViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,19 +20,15 @@ class MainActivity : AppCompatActivity() {
         binding.viewProductList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.viewProductList.adapter = adapter
-        updateUI(ProductListViewState.Content(
-            (1..3).map {
-                ProductCardViewState(
-                    "Product $it",
-                    "Description of product",
-                    "100 US$", ""
-                )
-            }
-        ))
+
+        viewModel.viewState.observe(this) { viewState ->
+            updateUI(viewState)
+        }
+        viewModel.loadProducts()
     }
 
-    private fun updateUI(viewState : ProductListViewState) {
-        when(viewState){
+    private fun updateUI(viewState: ProductListViewState) {
+        when (viewState) {
             ProductListViewState.Error -> {
                 binding.viewProductList.isVisible = false
                 binding.loadingView.isVisible = false
