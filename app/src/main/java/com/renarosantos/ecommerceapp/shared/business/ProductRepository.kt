@@ -2,6 +2,7 @@ package com.renarosantos.ecommerceapp.shared.business
 
 import com.renarosantos.ecommerceapp.product_list.business.Product
 import com.renarosantos.ecommerceapp.product_details.business.ProductDetails
+import com.renarosantos.ecommerceapp.shared.data.repository.api.Result
 
 /*
 * Even tho the name "Repository" may lead you to think that this is part of
@@ -11,7 +12,7 @@ import com.renarosantos.ecommerceapp.product_details.business.ProductDetails
 * */
 interface ProductRepository {
 
-    suspend fun getProductList(): List<Product>
+    suspend fun getProductList(): Result<List<Product>>
 
     suspend fun getProductDetails(productId: String): ProductDetails
 }

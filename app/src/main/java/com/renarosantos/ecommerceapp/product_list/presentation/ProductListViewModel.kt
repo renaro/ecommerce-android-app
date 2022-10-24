@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renarosantos.ecommerceapp.cart.business.CartRepository
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
+import com.renarosantos.ecommerceapp.shared.data.repository.api.Result
 import com.renarosantos.ecommerceapp.shared.presentation.PriceFormatter
 import com.renarosantos.ecommerceapp.shared.presentation.SingleLiveEvent
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
@@ -13,7 +14,6 @@ import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCas
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -60,22 +60,25 @@ class ProductListViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(ProductListViewState.Loading)
             // Data call to fetch products
-            val productList = repository.getProductList()
+            val result = repository.getProductList()
             val productsInCart = cartRepository.observeChanges().first()
-            _viewState.postValue(
-                ProductListViewState.Content(
-                    productList.map {
-                        ProductCardViewState(
-                            it.productId,
-                            it.title,
-                            it.description,
-                            priceFormatter.format(it.price),
-                            it.imageUrl,
-                            isProductInWishListUseCase.execute(it.productId),
-                            productsInCart.contains(it.productId)
-                        )
-                    }
-                ))
+            when (result) {
+                is Result.Error -> _viewState.postValue(ProductListViewState.Error)
+                is Result.Success -> _viewState.postValue(
+                    ProductListViewState.Content(
+                        result.data.map {
+                            ProductCardViewState(
+                                it.productId,
+                                it.title,
+                                it.description,
+                                priceFormatter.format(it.price),
+                                it.imageUrl,
+                                isProductInWishListUseCase.execute(it.productId),
+                                productsInCart.contains(it.productId)
+                            )
+                        }
+                    ))
+            }
         }
     }
 
