@@ -32,9 +32,9 @@ class ProductRepositoryAPITest {
                 ""
             )
         }
-        val products = repository.getProductList()
+        val products = repository.getProductList() as Result.Success
 
-        assert(products.size == 3)
-        assert(products[1].description == "description 1")
+        assert(products.data.size == 3)
+        assert(products.data[1].description == "description 1")
     }
 }
