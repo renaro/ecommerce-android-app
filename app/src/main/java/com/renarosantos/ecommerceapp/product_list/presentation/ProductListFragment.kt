@@ -90,8 +90,6 @@ class ProductListFragment : Fragment() {
     }
 
     private fun setupProductRecyclerView() {
-        binding.viewProductList.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.viewProductList.adapter = adapter
     }
 }

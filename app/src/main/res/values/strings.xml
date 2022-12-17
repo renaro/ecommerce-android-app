@@ -2,4 +2,13 @@
     <string name="app_name">E-commerce App</string>
     <string name="buy_it">Buy it!</string>
     <string name="remove">Remove</string>
+    <string name="add_or_remove_from_cart">Button to add or remove from shopping cart</string>
+    <string name="product_image">Product Image</string>
+    <string name="sample_product_name">Sukin Facial Cleaner For Men</string>
+    <string name="sample_product_details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius</string>
+    <string name="favorite_item">Add to favorites</string>
+    <plurals name="product_item_count">
+        <item quantity="one">Found \n%1$s Result</item>
+        <item quantity="other">Found \n%1$s Results</item>
+    </plurals>
 </resources>
