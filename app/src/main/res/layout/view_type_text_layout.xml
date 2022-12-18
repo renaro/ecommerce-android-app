@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20dp"
         android:fontFamily="@font/poppins_bold"
-        android:layout_marginTop="@dimen/dimen_20dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
         android:maxLines="2"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,5 +22,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Found \n10 Results" />
+        tools:text="Found 10 Results" />
 </androidx.constraintlayout.widget.ConstraintLayout>
