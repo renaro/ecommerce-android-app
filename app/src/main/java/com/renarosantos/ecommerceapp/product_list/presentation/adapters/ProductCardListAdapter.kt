@@ -124,6 +124,7 @@ class ProductCardListAdapter(
             AppDiffUtil<ProductCardViewState>(products, data)
         val diffResult = DiffUtil.calculateDiff(diff)
         data = products
+        notifyItemRangeChanged(0, products.size, true)
         notifyDataSetChanged()
         diffResult.dispatchUpdatesTo(this)
     }

@@ -1,11 +1,13 @@
 package com.renarosantos.ecommerceapp.product_list.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ import com.renarosantos.ecommerceapp.R
 import com.renarosantos.ecommerceapp.databinding.ProductListFragmentBinding
 import com.renarosantos.ecommerceapp.product_list.presentation.adapters.ProductCardListAdapter
 import com.renarosantos.ecommerceapp.product_list.presentation.adapters.setSpanCount
+import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_1
 import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_2
 import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY
 import dagger.hilt.android.AndroidEntryPoint
@@ -151,6 +154,15 @@ class ProductListFragment : Fragment() {
     }
 
     private fun setRecyclerViewLayoutBackToPrefered() {
+        val lastToggleIcon = if (Prefs.getInt(
+                PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY,
+                PREFS_LAYOUT_MANAGER_SPAN_COUNT_1
+            ) == PREFS_LAYOUT_MANAGER_SPAN_COUNT_1
+        ) ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.ic_grid_layout
+        ) else ContextCompat.getDrawable(requireContext(), R.drawable.ic_linear_layout)
+        toggleBtn.setImageDrawable(lastToggleIcon)
         val preferedLayout =
             Prefs.getInt(PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY, PREFS_LAYOUT_MANAGER_SPAN_COUNT_2)
         setSpanCount(recyclerView, preferedLayout)
