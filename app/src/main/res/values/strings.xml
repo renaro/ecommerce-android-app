@@ -7,8 +7,10 @@
     <string name="sample_product_name">Sukin Facial Cleaner For Men</string>
     <string name="sample_product_details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius</string>
     <string name="favorite_item">Add to favorites</string>
+    <string name="toggle_layout">Toggle layout</string>
+    <string name="error_occured">An error occured</string>
     <plurals name="product_item_count">
-        <item quantity="one">Found \n%1$s Result</item>
-        <item quantity="other">Found \n%1$s Results</item>
+        <item quantity="one">Found %1$s Result</item>
+        <item quantity="other">Found %1$s Results</item>
     </plurals>
 </resources>

@@ -1,16 +1,18 @@
-package com.renarosantos.ecommerceapp.product_list.presentation
+package com.renarosantos.ecommerceapp.product_list.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isInvisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.renarosantos.ecommerceapp.R
 import com.renarosantos.ecommerceapp.databinding.ProductCardBinding
 import com.renarosantos.ecommerceapp.databinding.ViewTypeTextLayoutBinding
+import com.renarosantos.ecommerceapp.product_list.presentation.ProductCardViewState
 import com.renarosantos.ecommerceapp.product_list.utils.Utils.VIEW_TYPE_PRODUCTS
 import com.renarosantos.ecommerceapp.product_list.utils.Utils.VIEW_TYPE_TEXT
 
@@ -45,16 +47,6 @@ class ProductCardListAdapter(
 
     override fun getItemCount(): Int {
         return data.size
-    }
-
-    fun setData(productList: List<ProductCardViewState>) {
-        val products = arrayListOf<ProductCardViewState>()
-        products.apply {
-            add(0, ProductCardViewState("", "", "", "", "", false, false))
-            addAll(productList)
-        }
-        this.data = products
-        notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -120,5 +112,19 @@ class ProductCardListAdapter(
                     .into(BitmapImageViewTarget(productImage))
             }
         }
+    }
+
+    fun setData(productList: List<ProductCardViewState>) {
+        val products = arrayListOf<ProductCardViewState>()
+        products.apply {
+            add(0, ProductCardViewState("", "", "", "", "", false, false))
+            addAll(productList)
+        }
+        val diff =
+            AppDiffUtil<ProductCardViewState>(products, data)
+        val diffResult = DiffUtil.calculateDiff(diff)
+        data = products
+        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 }
