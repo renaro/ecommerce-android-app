@@ -12,11 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.pixplicity.easyprefs.library.Prefs
 import com.renarosantos.ecommerceapp.R
 import com.renarosantos.ecommerceapp.databinding.ProductListFragmentBinding
 import com.renarosantos.ecommerceapp.product_list.presentation.adapters.ProductCardListAdapter
+import com.renarosantos.ecommerceapp.product_list.presentation.adapters.setSpanCount
+import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_2
+import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -98,7 +101,7 @@ class ProductListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        adapter.setData(data)
+        setRecyclerViewLayoutBackToPrefered()
         searchVw.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { queryText ->
@@ -116,10 +119,6 @@ class ProductListFragment : Fragment() {
                 return true
             }
         })
-
-        toggleBtn.setOnClickListener {
-            setStaggeredGridLayoutManagerOnAdapter()
-        }
     }
 
     // parameter just to show how to retrieve data from Adapter to the fragment
@@ -151,14 +150,9 @@ class ProductListFragment : Fragment() {
         }
     }
 
-    private fun setStaggeredGridLayoutManagerOnAdapter() {
-        val staggeredGridLayoutManager =
-            (recyclerView.layoutManager as StaggeredGridLayoutManager).apply {
-                spanCount = 2
-            }
-        recyclerView.layoutManager = staggeredGridLayoutManager
-    }
-
-    private fun setLinearLayoutManagerOnAdapter() {
+    private fun setRecyclerViewLayoutBackToPrefered() {
+        val preferedLayout =
+            Prefs.getInt(PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY, PREFS_LAYOUT_MANAGER_SPAN_COUNT_2)
+        setSpanCount(recyclerView, preferedLayout)
     }
 }
