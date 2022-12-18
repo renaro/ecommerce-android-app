@@ -1,36 +1,59 @@
 package com.renarosantos.ecommerceapp.product_list.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.pixplicity.easyprefs.library.Prefs
+import com.renarosantos.ecommerceapp.R
 import com.renarosantos.ecommerceapp.databinding.ProductListFragmentBinding
+import com.renarosantos.ecommerceapp.product_list.presentation.adapters.ProductCardListAdapter
+import com.renarosantos.ecommerceapp.product_list.presentation.adapters.setSpanCount
+import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_1
+import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_2
+import com.renarosantos.ecommerceapp.product_list.utils.Utils.PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProductListFragment : Fragment() {
     private lateinit var binding: ProductListFragmentBinding
+    private lateinit var searchVw: SearchView
+    private lateinit var toggleBtn: ImageView
+    private lateinit var recyclerView: RecyclerView
     private val viewModel: ProductListViewModel by viewModels()
+    private var data: ArrayList<ProductCardViewState> = arrayListOf()
     private val adapter =
-        ProductCardListAdapter(::onItemClicked, ::onFavoriteIconClicked, ::onBuyItCLicked, ::onRemoveClicked)
+        ProductCardListAdapter(
+            ::onItemClicked,
+            ::onFavoriteIconClicked,
+            ::onBuyItCLicked,
+            ::onRemoveClicked
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = ProductListFragmentBinding.inflate(layoutInflater)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.product_list_fragment, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews() // Initialize views
         setupProductRecyclerView()
 
         viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
@@ -45,10 +68,15 @@ class ProductListFragment : Fragment() {
     }
 
     private fun updateUiForEvent(it: ProductListViewModel.AddToCartEvent) {
-        if(it.isSuccess){
-            Snackbar.make(binding.coordinator, "Product added to the cart!", Snackbar.LENGTH_SHORT).show()
+        if (it.isSuccess) {
+            Snackbar.make(binding.coordinator, "Product added to the cart!", Snackbar.LENGTH_SHORT)
+                .show()
         } else {
-            Snackbar.make(binding.coordinator, "Product already in the cart!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                binding.coordinator,
+                "Product already in the cart!",
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -58,7 +86,8 @@ class ProductListFragment : Fragment() {
                 binding.viewProductList.isVisible = true
                 binding.errorView.isVisible = false
                 binding.loadingView.isVisible = false
-                adapter.setData(viewState.productList)
+                data = (viewState.productList as ArrayList<ProductCardViewState>)
+                adapter.setData(data)
             }
             ProductListViewState.Error -> {
                 binding.viewProductList.isVisible = false
@@ -73,6 +102,28 @@ class ProductListFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        setRecyclerViewLayoutBackToPrefered()
+        searchVw.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { queryText ->
+                    val temporalList = data.filter { it.title.contains(queryText, true) }
+                    adapter.setData(temporalList)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { newTextString ->
+                    val temporalList = data.filter { it.title.contains(newTextString, true) }
+                    adapter.setData(temporalList)
+                }
+                return true
+            }
+        })
+    }
+
     // parameter just to show how to retrieve data from Adapter to the fragment
     private fun onItemClicked(viewState: ProductCardViewState) {
         findNavController().navigate(ProductListFragmentDirections.actionProductListFragmentToProductDetailsFragment())
@@ -81,7 +132,8 @@ class ProductListFragment : Fragment() {
     private fun onBuyItCLicked(viewState: ProductCardViewState) {
         viewModel.onBuyClicked(viewState.id)
     }
-    private fun onRemoveClicked(viewState: ProductCardViewState){
+
+    private fun onRemoveClicked(viewState: ProductCardViewState) {
         viewModel.removeClicked(viewState.id)
     }
 
@@ -90,8 +142,29 @@ class ProductListFragment : Fragment() {
     }
 
     private fun setupProductRecyclerView() {
-        binding.viewProductList.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.viewProductList.adapter = adapter
+        recyclerView.adapter = adapter
+    }
+
+    private fun initViews() {
+        with(binding) {
+            searchVw = searchView
+            toggleBtn = toggleLayout
+            recyclerView = viewProductList
+        }
+    }
+
+    private fun setRecyclerViewLayoutBackToPrefered() {
+        val lastToggleIcon = if (Prefs.getInt(
+                PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY,
+                PREFS_LAYOUT_MANAGER_SPAN_COUNT_1
+            ) == PREFS_LAYOUT_MANAGER_SPAN_COUNT_1
+        ) ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.ic_grid_layout
+        ) else ContextCompat.getDrawable(requireContext(), R.drawable.ic_linear_layout)
+        toggleBtn.setImageDrawable(lastToggleIcon)
+        val preferedLayout =
+            Prefs.getInt(PREFS_LAYOUT_MANAGER_SPAN_COUNT_KEY, PREFS_LAYOUT_MANAGER_SPAN_COUNT_2)
+        setSpanCount(recyclerView, preferedLayout)
     }
 }

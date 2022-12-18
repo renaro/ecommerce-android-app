@@ -1,107 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    >
+    android:layout_margin="@dimen/dimen_5dp"
+    android:background="@drawable/product_card_item_bg"
+    android:paddingHorizontal="@dimen/dimen_10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/productImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:contentDescription="@string/product_image"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sample_product_item" />
 
-        <ImageView
-            android:id="@+id/productImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+    <ImageView
+        android:id="@+id/view_wishlist_icon"
+        android:layout_width="@dimen/dimen_25dp"
+        android:layout_height="@dimen/dimen_25dp"
+        android:contentDescription="@string/favorite_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/productImage"
+        app:srcCompat="@drawable/ic_baseline_favorite_disabled" />
 
-        <TextView
-            android:id="@+id/viewProductName"
-            app:layout_constraintStart_toEndOf="@id/productImage"
-            app:layout_constraintTop_toTopOf="@id/productImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Playstation 5" />
+    <TextView
+        android:id="@+id/viewProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:fontFamily="@font/poppins_bold"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productImage"
+        tools:text="@string/sample_product_name" />
 
-        <TextView
-            android:id="@+id/viewProductDescription"
-            app:layout_constraintStart_toStartOf="@id/viewProductName"
-            app:layout_constraintTop_toBottomOf="@id/viewProductName"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="With the new Playstation 5 you can play the most awesome games non-stop! Make sure to pre-order!" />
+    <TextView
+        android:id="@+id/viewProductDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins"
+        android:justificationMode="inter_word"
+        android:maxLines="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/viewProductName"
+        app:layout_constraintTop_toBottomOf="@+id/viewProductName"
+        tools:text="@string/sample_product_details" />
 
+    <TextView
+        android:id="@+id/productPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dimen_20dp"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/viewProductDescription"
+        app:layout_constraintTop_toBottomOf="@+id/viewProductDescription"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="$ 10.99" />
 
-        <TextView
-            android:id="@+id/productPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewProductDescription"
-            app:layout_constraintBottom_toTopOf="@id/buyButton"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="$599,99"
-            />
+    <ImageView
+        android:id="@+id/buyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_10dp"
+        android:background="@drawable/add_to_cart_btn_bg"
+        android:contentDescription="@string/add_or_remove_from_cart"
+        app:layout_constraintBottom_toBottomOf="@+id/productPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/productPrice"
+        app:srcCompat="@drawable/add_shopping_cart_24" />
 
-        <Button
-            android:id="@+id/buyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/add_shopping_cart_24"
-            android:backgroundTint="#1aaa1a"
-            app:layout_constraintTop_toBottomOf="@id/productPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/buy_it"
-            />
-        <Button
-            android:id="@+id/removeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_baseline_remove_shopping_cart_24"
-            android:backgroundTint="#B0B3B1"
-            app:layout_constraintTop_toBottomOf="@id/productPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/remove"
-            />
-
-        <ImageView
-            android:id="@+id/view_wishlist_icon"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="12dp"
-            android:padding="8dp"
-            android:background="@drawable/border"
-            android:src="@drawable/ic_baseline_favorite"
-            app:layout_constraintBottom_toBottomOf="@+id/buyButton"
-            app:layout_constraintEnd_toStartOf="@id/buyButton"
-            app:layout_constraintTop_toTopOf="@id/buyButton"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/removeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_10dp"
+        android:background="@drawable/add_to_cart_btn_bg"
+        android:contentDescription="@string/add_or_remove_from_cart"
+        app:layout_constraintBottom_toBottomOf="@+id/productPrice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/productPrice"
+        app:srcCompat="@drawable/ic_baseline_remove_shopping_cart_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

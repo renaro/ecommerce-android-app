@@ -11,7 +11,6 @@ import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCas
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -67,7 +66,8 @@ class ProductListViewModelTest {
         dispatcher.scheduler.advanceUntilIdle()
 
         assert(values[0] is ProductListViewState.Loading)
-        assert(values[1] ==
+        assert(
+            values[1] ==
                 ProductListViewState.Content(
                     (0..2).map {
                         ProductCardViewState(
@@ -80,7 +80,8 @@ class ProductListViewModelTest {
                             false
                         )
                     }
-                ))
+                )
+        )
     }
 
     @Test
@@ -94,7 +95,8 @@ class ProductListViewModelTest {
         dispatcher.scheduler.advanceUntilIdle()
 
         assert(values[0] is ProductListViewState.Loading)
-        assert(values[1] ==
+        assert(
+            values[1] ==
                 ProductListViewState.Content(
                     (0..2).map {
                         ProductCardViewState(
@@ -107,8 +109,7 @@ class ProductListViewModelTest {
                             it == 2
                         )
                     }
-                ))
-
+                )
+        )
     }
-
 }
