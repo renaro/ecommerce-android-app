@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    Default Colors-->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +8,30 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--    VariantColors-->
+    <color name="ghost_white">#FAFAFC</color>
+    <color name="magnolia">#F1EDF8</color>
+    <color name="mandy">#EC5659</color>
+    <color name="black_russian">#212329</color>
+    <color name="dark_black_russian">#15161C</color>
+    <color name="scorpion">#725d62</color>
+
+    <!--    Background Colors-->
+    <color name="default_background_color">@color/magnolia</color>
+    <color name="cardview_background_color">@color/ghost_white</color>
+
+    <!--    Text Colors-->
+    <color name="default_text_color">@color/black_russian</color>
+    <color name="alternative_text_color">@color/mandy</color>
+
+    <!--    Button Colors-->
+    <color name="strong_button_color">@color/mandy</color>
+    <color name="weak_button_color">@color/scorpion</color>
+
+    <!--    ProgressBar Colors-->
+    <color name="default_progressbar_color">@color/black_russian</color>
+
+    <!--    Toolbar Colors-->
+    <color name="default_toolbar_color">@color/ghost_white</color>
 </resources>

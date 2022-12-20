@@ -5,30 +5,31 @@
     android:id="@+id/badgeContainer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingEnd="8dp"
     android:paddingStart="8dp"
+    android:paddingEnd="8dp"
     tools:background="#baff00">
 
     <ImageView
         android:id="@+id/viewBadge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add_shopping_cart_24"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/cart_icon"
+        android:src="@drawable/ic_add_shopping_cart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        />
+        app:tint="@color/default_text_color" />
 
     <TextView
         android:id="@+id/viewCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="4dp"
-        tools:text="99"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/viewBadge"
+        android:textColor="@color/default_text_color"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toEndOf="@id/viewBadge"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="99" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

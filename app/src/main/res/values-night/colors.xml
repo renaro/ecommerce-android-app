@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    Background Colors-->
+    <color name="default_background_color">@color/dark_black_russian</color>
+    <color name="cardview_background_color">@color/black_russian</color>
+
+    <!--    Text Colors-->
+    <color name="default_text_color">@color/ghost_white</color>
+    <color name="alternative_text_color">@color/mandy</color>
+
+    <!--    Button Colors-->
+    <color name="strong_button_color">@color/mandy</color>
+    <color name="weak_button_color">@color/scorpion</color>
+
+    <!--    ProgressBar Colors-->
+    <color name="default_progressbar_color">@color/ghost_white</color>
+
+    <!--    Toolbar Colors-->
+    <color name="default_toolbar_color">@color/black_russian</color>
+</resources>

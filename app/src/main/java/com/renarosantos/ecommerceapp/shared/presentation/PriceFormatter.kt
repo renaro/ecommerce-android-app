@@ -7,7 +7,7 @@ interface PriceFormatter {
 object InternationalPriceFormatter : PriceFormatter {
 
     override fun format(value: Double): String {
-        return "US $${value}"
+        return "US $ ${value}"
     }
 
 }
