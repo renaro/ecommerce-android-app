@@ -7,28 +7,36 @@
     android:layout_height="wrap_content"
     android:paddingEnd="8dp"
     android:paddingStart="8dp"
-    tools:background="#baff00">
+    tools:background="@color/purple_500">
 
     <ImageView
         android:id="@+id/viewBadge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add_shopping_cart_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        />
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_shop_cart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/viewCounter"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_12sdp"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        tools:text="99"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="2dp"
+        android:background="@drawable/border"
+        android:textSize="@dimen/_8ssp"
+        android:textColor="@color/purple_500"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/viewBadge"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="99" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

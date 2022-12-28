@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.renarosantos.ecommerceapp.R
 import com.renarosantos.ecommerceapp.databinding.ProductCardBinding
+import com.renarosantos.ecommerceapp.product_list.productUtils.ProductUtils
 
 class ProductCardListAdapter(
     val onItemClicked: (ProductCardViewState) -> Unit,
@@ -22,13 +22,20 @@ class ProductCardListAdapter(
 
     private var data: List<ProductCardViewState> = emptyList()
 
+    private var spanCount = ProductUtils.PRODUCT_GRIDLAYOUT_SPAN_COUNT_ONE
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.product_card, parent, false)
-        )
+        val view:View;
+        if (viewType == ProductUtils.PRODUCT_GRIDLAYOUT_COLUMN){
+            view = LayoutInflater.from(parent.context).inflate(R.layout.product_card_column, parent, false)
+
+        }else
+            view = LayoutInflater.from(parent.context).inflate(R.layout.product_card, parent, false)
+
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,9 +46,19 @@ class ProductCardListAdapter(
         return data.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        if (spanCount == ProductUtils.PRODUCT_GRIDLAYOUT_SPAN_COUNT_TWO){
+            return ProductUtils.PRODUCT_GRIDLAYOUT_COLUMN
+        }else
+            return ProductUtils.PRODUCT_GRIDLAYOUT_ROW
+    }
     fun setData(productList: List<ProductCardViewState>) {
         this.data = productList
         notifyDataSetChanged()
+    }
+    fun changeLayout(spanCount :Int){
+        this.spanCount = spanCount
+        notifyItemRangeChanged(0,data.size)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -66,8 +83,8 @@ class ProductCardListAdapter(
                 removeButton.setOnClickListener {
                     onRemoveClicked.invoke(productCardViewState)
                 }
-                buyButton.isInvisible = productCardViewState.isProductInCart
-                removeButton.isInvisible = !productCardViewState.isProductInCart
+                //buyButton.isInvisible = productCardViewState.isProductInCart
+                //removeButton.isInvisible = !productCardViewState.isProductInCart
                 viewWishlistIcon.setImageDrawable(
                     if (productCardViewState.isFavorite) {
                         ResourcesCompat.getDrawable(
