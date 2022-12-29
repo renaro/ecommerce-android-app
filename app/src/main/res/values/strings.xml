@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">E-commerce App</string>
-    <string name="buy_it">Buy it!</string>
+    <string name="buy_it">Buy</string>
     <string name="remove">Remove</string>
+    <string name="network_error">Slow or no internet connection.\n Check your connection</string>
+    <string name="network_error_oops">Ooops!</string>
+    <string name="retry_btn">Retry</string>
 </resources>

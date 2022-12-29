@@ -6,22 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#dadada"
+        android:background="@color/white"
         tools:context=".shared.presentation.MainActivity">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/view_product_list"
+        <LinearLayout
+            android:id="@+id/product_custom_action_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/_40sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal"
+            android:gravity="end"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageButton
+                android:id="@+id/switch_grid_linear_btn"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_grid"
+                />
+        </LinearLayout>
+
+
+        <com.skydoves.androidveil.VeilRecyclerFrameView
+            android:id="@+id/view_product_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:forceDarkAllowed="false"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/product_custom_action_bar"
+
+            app:veilFrame_baseAlpha="0.6"
+            app:veilFrame_baseColor="@color/shimmer_base"
+            app:veilFrame_highlightAlpha="1.0"
+
+            app:veilFrame_highlightColor="@color/shimmer_highlight"
+            app:veilFrame_layout="@layout/product_card"
+            app:veilFrame_radius="8dp"
+            app:veilFrame_shimmerEnable="true"
+            tools:listitem="@layout/product_card_column" />
+        <!-- if you don't need it, it should be removed-->
         <ProgressBar
+            android:visibility="gone"
             android:id="@+id/loadingView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,15 +65,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- if you don't need it, it should be removed-->
         <ImageView
-            android:id="@+id/errorView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_baseline_error_24"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- error view-->
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/error_view_background"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/network_error_oops"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:padding="@dimen/_16sdp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/network_error"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:textAlignment="center"
+
+            android:paddingBottom="@dimen/_16sdp" />
+
+        <Button
+            android:id="@+id/retryBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginHorizontal="@dimen/_32sdp"
+            android:text="@string/retry_btn"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

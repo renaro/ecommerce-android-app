@@ -3,64 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
 
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    android:layout_marginHorizontal="@dimen/_8sdp"
-    android:layout_marginTop="@dimen/_10sdp"
-    android:layout_marginBottom="@dimen/_6sdp"
-
-    app:contentPaddingLeft="@dimen/_8sdp"
-    app:contentPaddingTop="@dimen/_8sdp"
-    app:contentPaddingBottom="@dimen/_8sdp"
+    android:layout_width="@dimen/_125sdp"
+    android:layout_height="@dimen/_205sdp"
 
     app:cardElevation="@dimen/_8sdp"
     app:cardCornerRadius="@dimen/_8sdp"
+
+    app:contentPadding="@dimen/_8sdp"
+    android:layout_marginHorizontal="@dimen/_8sdp"
+    android:layout_marginVertical="@dimen/_8sdp"
+
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <ImageButton
-            android:id="@+id/view_wishlist_icon"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-
-            android:background="@color/transparent"
-            android:src="@drawable/ic_baseline_favorite"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/productImage"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
 
-            android:src="#bababa"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/_8sdp"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/view_wishlist_icon" />
 
         <TextView
             android:id="@+id/viewProductName"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
 
-            android:layout_marginHorizontal="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:maxLines="2"
+            android:layout_marginVertical="@dimen/_8sdp"
             android:ellipsize="end"
-            android:paddingEnd="@dimen/_8sdp"
+            android:maxLines="2"
 
+            android:text="Playstation gf fdf fdsdfdff fdfdf fdfdf dfd 5"
             style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:text="Playstation 5"
 
             app:layout_constraintBottom_toTopOf="@+id/productPrice"
-            app:layout_constraintEnd_toStartOf="@+id/view_wishlist_icon"
-            app:layout_constraintStart_toEndOf="@id/productImage"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/productImage" />
 
         <TextView
             android:id="@+id/viewProductDescription"
@@ -78,35 +63,38 @@
 
         <TextView
             android:id="@+id/productPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_16sdp"
 
-            android:text="$599,99"
-            android:fontFamily="sans-serif-medium"
+            android:ellipsize="end"
+            android:maxLines="1"
+
+            android:text="$599,9"
             android:textColor="@color/purple_500"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
 
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/viewProductName" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/buyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
 
-            android:layout_marginStart="16dp"
-            android:visibility="gone"
-            android:backgroundTint="@color/orange"
+            android:layout_marginStart="26dp"
+            android:layout_marginEnd="26dp"
+
+
             android:text="@string/buy_it"
-            android:textColor="@color/white"
+            android:visibility="gone"
 
-            android:textStyle="bold"
-
-
-            app:layout_constraintBottom_toBottomOf="@id/productPrice"
-            app:layout_constraintStart_toEndOf="@id/productPrice"
-            app:layout_constraintTop_toTopOf="@+id/productPrice" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/productPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/productPrice" />
 
         <Button
             android:id="@+id/removeButton"
@@ -122,6 +110,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/productPrice" />
+
+        <ImageButton
+            android:id="@+id/view_wishlist_icon"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+
+            android:src="@drawable/ic_baseline_favorite"
+            android:backgroundTint="@color/transparent"
+
+            android:layout_marginTop="-8dp"
+            android:layout_marginEnd="-8dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

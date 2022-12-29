@@ -31,6 +31,7 @@ android {
         viewBinding.enabled = true
     }
 
+
     buildTypes {
         release {
             minifyEnabled false
@@ -91,6 +92,13 @@ dependencies {
 
     // Mockk
     testImplementation "io.mockk:mockk:1.12.1"
+
+    //sdp
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+    //AndroidVeil
+    implementation 'com.github.skydoves:androidveil:1.1.2'
 
     // Coroutines Test
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1'
