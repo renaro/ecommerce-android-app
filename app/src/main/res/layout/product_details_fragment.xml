@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/default_background_color">
 
     <ImageView
+        android:contentDescription="@string/image_item"
         android:id="@+id/viewProductImage"
         android:layout_width="0dp"
         android:layout_height="300dp"
@@ -17,61 +18,63 @@
 
     <TextView
         android:id="@+id/viewProductTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        tools:text="Product Title"
-        style="@style/TextAppearance.MaterialComponents.Headline4"
-        app:layout_constraintEnd_toStartOf="@id/viewPrice"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewProductImage" />
-
-    <TextView
-        android:id="@+id/viewPrice"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:textStyle="bold"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
-        tools:text="300 US$"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/viewProductTitle" />
-
-
-    <TextView
-        android:id="@+id/viewShortDescription"
+        style="@style/Headline01"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:maxLines="3"
-        tools:text="This is an example of a very short description"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toStartOf="@id/viewPrice"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewProductImage"
+        tools:text="Product Title" />
+
+    <TextView
+        android:id="@+id/viewPrice"
+        style="@style/Headline01_Alternative_Color"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewProductTitle" />
+        app:layout_constraintTop_toTopOf="@id/viewProductTitle"
+        tools:text="300 US$" />
+
+
+    <TextView
+        android:id="@+id/viewShortDescription"
+        style="@style/Headline02"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        android:maxLines="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewProductTitle"
+        tools:text="This is an example of a very short description" />
 
     <TextView
         android:id="@+id/view_full_description"
+        style="@style/Default_Text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        style="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/addToCartButton"
-        tools:text="Very long description here"
-        app:layout_constraintTop_toBottomOf="@id/viewShortDescription" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewShortDescription"
+        tools:text="@string/tools_item_description" />
 
     <Button
         android:id="@+id/addToCartButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#1aaa1a"
-        android:text="Add to cart"
-        android:textColor="#FFF"
+        android:backgroundTint="@color/strong_button_color"
+        android:text="@string/add_to_cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -80,10 +83,10 @@
         android:id="@+id/loadingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminateTint="@color/default_progressbar_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

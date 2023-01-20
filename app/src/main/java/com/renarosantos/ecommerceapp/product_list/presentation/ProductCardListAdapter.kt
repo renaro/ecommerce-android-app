@@ -72,13 +72,13 @@ class ProductCardListAdapter(
                     if (productCardViewState.isFavorite) {
                         ResourcesCompat.getDrawable(
                             viewWishlistIcon.resources,
-                            R.drawable.ic_baseline_favorite,
+                            R.drawable.ic_favorite_enabled,
                             null
                         )
                     } else {
                         ResourcesCompat.getDrawable(
                             viewWishlistIcon.resources,
-                            R.drawable.ic_baseline_favorite_disabled,
+                            R.drawable.ic_favorite_disabled,
                             null
                         )
                     }

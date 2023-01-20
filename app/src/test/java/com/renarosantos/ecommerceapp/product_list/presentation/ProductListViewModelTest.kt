@@ -30,6 +30,7 @@ class ProductListViewModelTest {
     private lateinit var viewModel: ProductListViewModel
     private val repository = mockk<ProductRepository>()
     private val isProductInWishListUseCase = mockk<IsProductInWishListUseCase>()
+    private val priceFormatter = mockk<InternationalPriceFormatter>()
     private val cartRepository = mockk<CartRepository>()
     private val addOrRemoveUseCase = mockk<AddOrRemoveFromWishListUseCase>()
     private val listOfProducts = (0..2).map {
@@ -39,6 +40,7 @@ class ProductListViewModelTest {
     @Before
     fun setUp() {
         coEvery { isProductInWishListUseCase.execute(any()) } returns false
+        coEvery { priceFormatter.format(any()) } returns "US $6.0"
         coEvery {
             isProductInWishListUseCase.execute("id-1")
         } returns true
@@ -51,7 +53,7 @@ class ProductListViewModelTest {
             isProductInWishListUseCase,
             addOrRemoveUseCase,
             cartRepository,
-            InternationalPriceFormatter,
+            priceFormatter,
             dispatcher
         )
     }

@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">E-commerce App</string>
-    <string name="buy_it">Buy it!</string>
+
+    <!--    text-->
+    <string name="add_to_cart">Add!</string>
     <string name="remove">Remove</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+
+    <!--    image descriptions-->
+    <string name="image_item">Image Item</string>
+    <string name="cart_icon">Cart Icon</string>
+    <string name="favorite_icon">Favorite Icon</string>
+
+    <!--    tools text-->
+    <string name="tools_item_description">With the new Playstation 5 you can play the most awesome games non-stop! Make sure to pre-order!</string>
+    <string name="tools_item_price">$599,99</string>
+    <string name="tools_item_title">Playstation 5</string>
 </resources>

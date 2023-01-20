@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.renarosantos.ecommerceapp.databinding.ProductListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +18,12 @@ class ProductListFragment : Fragment() {
     private lateinit var binding: ProductListFragmentBinding
     private val viewModel: ProductListViewModel by viewModels()
     private val adapter =
-        ProductCardListAdapter(::onItemClicked, ::onFavoriteIconClicked, ::onBuyItCLicked, ::onRemoveClicked)
+        ProductCardListAdapter(
+            ::onItemClicked,
+            ::onFavoriteIconClicked,
+            ::onBuyItCLicked,
+            ::onRemoveClicked
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +37,6 @@ class ProductListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupProductRecyclerView()
-
         viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
             updateUI(viewState)
         }
@@ -45,10 +49,15 @@ class ProductListFragment : Fragment() {
     }
 
     private fun updateUiForEvent(it: ProductListViewModel.AddToCartEvent) {
-        if(it.isSuccess){
-            Snackbar.make(binding.coordinator, "Product added to the cart!", Snackbar.LENGTH_SHORT).show()
+        if (it.isSuccess) {
+            Snackbar.make(binding.coordinator, "Product added to the cart!", Snackbar.LENGTH_SHORT)
+                .show()
         } else {
-            Snackbar.make(binding.coordinator, "Product already in the cart!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                binding.coordinator,
+                "Product already in the cart!",
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -81,7 +90,8 @@ class ProductListFragment : Fragment() {
     private fun onBuyItCLicked(viewState: ProductCardViewState) {
         viewModel.onBuyClicked(viewState.id)
     }
-    private fun onRemoveClicked(viewState: ProductCardViewState){
+
+    private fun onRemoveClicked(viewState: ProductCardViewState) {
         viewModel.removeClicked(viewState.id)
     }
 
@@ -91,7 +101,8 @@ class ProductListFragment : Fragment() {
 
     private fun setupProductRecyclerView() {
         binding.viewProductList.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            GridLayoutManager(requireContext(), 2)
+        binding.viewProductList.hasFixedSize()
         binding.viewProductList.adapter = adapter
     }
 }

@@ -5,103 +5,104 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    >
+    android:layout_margin="6dp"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/cardview_background_color">
 
         <ImageView
             android:id="@+id/productImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:contentDescription="@string/image_item"
+            android:padding="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-             />
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/viewProductName"
-            app:layout_constraintStart_toEndOf="@id/productImage"
-            app:layout_constraintTop_toTopOf="@id/productImage"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
+            style="@style/Headline01"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Playstation 5" />
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productImage"
+            tools:text="@string/tools_item_title" />
 
         <TextView
             android:id="@+id/viewProductDescription"
-            app:layout_constraintStart_toStartOf="@id/viewProductName"
-            app:layout_constraintTop_toBottomOf="@id/viewProductName"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
+            style="@style/Default_Text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="With the new Playstation 5 you can play the most awesome games non-stop! Make sure to pre-order!" />
-
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            app:layout_constraintEnd_toEndOf="@id/viewProductName"
+            app:layout_constraintStart_toStartOf="@id/viewProductName"
+            app:layout_constraintTop_toBottomOf="@id/viewProductName"
+            tools:text="@string/tools_item_description" />
 
         <TextView
             android:id="@+id/productPrice"
+            style="@style/Headline01_Alternative_Color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewProductDescription"
-            app:layout_constraintBottom_toTopOf="@id/buyButton"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="$599,99"
-            />
-
-        <Button
-            android:id="@+id/buyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/add_shopping_cart_24"
-            android:backgroundTint="#1aaa1a"
-            app:layout_constraintTop_toBottomOf="@id/productPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/buy_it"
-            />
-        <Button
-            android:id="@+id/removeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_baseline_remove_shopping_cart_24"
-            android:backgroundTint="#B0B3B1"
-            app:layout_constraintTop_toBottomOf="@id/productPrice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/remove"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/viewProductDescription"
+            tools:text="@string/tools_item_price" />
 
         <ImageView
             android:id="@+id/view_wishlist_icon"
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/favorite_icon"
             android:padding="8dp"
-            android:background="@drawable/border"
-            android:src="@drawable/ic_baseline_favorite"
-            app:layout_constraintBottom_toBottomOf="@+id/buyButton"
-            app:layout_constraintEnd_toStartOf="@id/buyButton"
-            app:layout_constraintTop_toTopOf="@id/buyButton"
-            />
+            android:src="@drawable/ic_favorite_enabled"
+            app:layout_constraintBottom_toBottomOf="@+id/productPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/productPrice"
+            app:tint="@color/strong_button_color" />
+
+        <Button
+            android:id="@+id/buyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:backgroundTint="@color/strong_button_color"
+            android:text="@string/add_to_cart"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_add_shopping_cart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/productPrice"
+            tools:ignore="DuplicateClickableBoundsCheck" />
+
+        <Button
+            android:id="@+id/removeButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:backgroundTint="@color/weak_button_color"
+            android:text="@string/remove"
+            android:textStyle="bold"
+            app:icon="@drawable/ic_remove_shopping_cart"
+            app:layout_constraintBottom_toBottomOf="@id/buyButton"
+            app:layout_constraintEnd_toEndOf="@id/buyButton"
+            app:layout_constraintStart_toStartOf="@id/buyButton"
+            app:layout_constraintTop_toTopOf="@id/buyButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
