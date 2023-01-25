@@ -4,14 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.renarosantos.ecommerceapp.cart.business.CartRepository
 import com.renarosantos.ecommerceapp.product_list.business.Product
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
-import com.renarosantos.ecommerceapp.shared.data.repository.api.Result
+import com.renarosantos.ecommerceapp.shared.business.Result
 import com.renarosantos.ecommerceapp.shared.presentation.InternationalPriceFormatter
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase
 import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renarosantos.ecommerceapp.cart.business.CartRepository
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
-import com.renarosantos.ecommerceapp.shared.data.repository.api.Result
+import com.renarosantos.ecommerceapp.shared.business.Result
 import com.renarosantos.ecommerceapp.shared.presentation.PriceFormatter
 import com.renarosantos.ecommerceapp.shared.presentation.SingleLiveEvent
 import com.renarosantos.ecommerceapp.wishlist.business.AddOrRemoveFromWishListUseCase

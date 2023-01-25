@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
+import com.renarosantos.ecommerceapp.shared.business.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +25,10 @@ class ProductDetailsViewModel @Inject constructor(
     fun loadProduct(productId: String) {
         viewModelScope.launch(dispatcher) {
             _viewState.postValue(ProductDetailsViewState.Loading)
-            // Data call to fetch products
-            val productDetails = repository.getProductDetails(productId)
-            _viewState.postValue(ProductDetailsViewState.Content(productDetails))
+            when (val result = repository.getProductDetails(productId)) {
+                is Result.Error -> _viewState.postValue(ProductDetailsViewState.Error)
+                is Result.Success -> _viewState.postValue(ProductDetailsViewState.Content(result.data))
+            }
         }
     }
 }

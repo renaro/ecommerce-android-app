@@ -2,6 +2,7 @@ package com.renarosantos.ecommerceapp.product_details.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.renarosantos.ecommerceapp.shared.business.ProductRepository
+import com.renarosantos.ecommerceapp.shared.business.Result
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,7 +33,7 @@ class ProductDetailsViewModelTest {
         viewModel.viewState.observeForever {
             viewStates.add(it)
         }
-        coEvery { repository.getProductDetails("anyId") } returns mockk()
+        coEvery { repository.getProductDetails("anyId") } returns Result.Success(mockk())
         viewModel.loadProduct("anyId")
         dispatcher.scheduler.advanceUntilIdle()
         assert(viewStates[0] is ProductDetailsViewState.Loading)

@@ -1,4 +1,4 @@
-package com.renarosantos.ecommerceapp.shared.data.repository.api
+package com.renarosantos.ecommerceapp.shared.business
 
 sealed class Result<out T> {
     data class Error(val exception: Exception) : Result<Nothing>()

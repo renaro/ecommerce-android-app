@@ -1,6 +1,7 @@
 package com.renarosantos.ecommerceapp.shared.data.repository.api
 
 import com.renarosantos.ecommerceapp.product_list.data.ProductEntity
+import com.renarosantos.ecommerceapp.shared.business.Result
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
