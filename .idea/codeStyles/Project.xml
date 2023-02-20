@@ -27,6 +27,7 @@
         <emptyLine />
       </value>
     </option>
+    <option name="ENABLE_SECOND_REFORMAT" value="true" />
     <JavaCodeStyleSettings>
       <option name="IMPORT_LAYOUT_TABLE">
         <value>

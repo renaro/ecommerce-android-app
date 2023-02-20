@@ -1,7 +1,5 @@
 package com.renarosantos.ecommerceapp.product_list.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renarosantos.ecommerceapp.cart.business.CartRepository
@@ -14,6 +12,8 @@ import com.renarosantos.ecommerceapp.wishlist.business.IsProductInWishListUseCas
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,9 +28,8 @@ class ProductListViewModel @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ProductListViewState>()
-    val viewState: LiveData<ProductListViewState>
-        get() = _viewState
+    private val _viewState = MutableStateFlow<ProductListViewState>(ProductListViewState.Loading)
+    val viewState = _viewState.asStateFlow()
 
     // Can be used for navigation/snackbar/toast/etc...
     val cartEvents = SingleLiveEvent<AddToCartEvent>()
@@ -38,33 +37,28 @@ class ProductListViewModel @Inject constructor(
     init {
         viewModelScope.launch(dispatcher) {
             cartRepository.observeChanges().collect {
-                updateViewStateForCartChanges(it)
+                (_viewState.value as? ProductListViewState.Content)?.let { content ->
+                    _viewState.emit(
+                        ProductListViewState.Content(
+                            content.productList.map { item ->
+                                item.copy(isProductInCart = it.contains(item.id))
+                            }
+                        )
+                    )
+                }
             }
         }
     }
 
-    private fun updateViewStateForCartChanges(cartItems: List<String>) {
-        (_viewState.value as? ProductListViewState.Content)?.let { content ->
-            _viewState.postValue(
-                ProductListViewState.Content(
-                    content.productList.map {
-                        it.copy(isProductInCart = cartItems.contains(it.id))
-                    }
-                )
-            )
-        }
-    }
-
-
     fun loadProductList() {
         viewModelScope.launch(dispatcher) {
-            _viewState.postValue(ProductListViewState.Loading)
+            _viewState.emit(ProductListViewState.Loading)
             // Data call to fetch products
             val result = repository.getProductList()
             val productsInCart = cartRepository.observeChanges().first()
             when (result) {
-                is Result.Error -> _viewState.postValue(ProductListViewState.Error)
-                is Result.Success -> _viewState.postValue(
+                is Result.Error -> _viewState.emit(ProductListViewState.Error)
+                is Result.Success -> _viewState.emit(
                     ProductListViewState.Content(
                         result.data.map {
                             ProductCardViewState(
@@ -87,7 +81,7 @@ class ProductListViewModel @Inject constructor(
             addOrRemoveFromWishListUseCase.execute(productId)
             val currentViewState = _viewState.value
             (currentViewState as? ProductListViewState.Content)?.let { content ->
-                _viewState.postValue(
+                _viewState.emit(
                     content.updateFavoriteProduct(
                         productId,
                         isProductInWishListUseCase.execute(productId)

@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.renarosantos.ecommerceapp.composables.ProductList
 import com.renarosantos.ecommerceapp.databinding.ProductListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,15 +34,30 @@ class ProductListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = ProductListFragmentBinding.inflate(layoutInflater)
-        return binding.root
+        return ComposeView(requireContext()).apply {
+            setContent {
+                val state = viewModel.viewState.collectAsState()
+                when (val value = state.value) {
+                    is ProductListViewState.Content -> {
+                        ProductList(cards = value.productList) {}
+                    }
+                    ProductListViewState.Error -> {
+
+                    }
+                    ProductListViewState.Loading -> {
+
+                    }
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupProductRecyclerView()
-        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
-            updateUI(viewState)
-        }
+//        viewModel.viewState.observe(viewLifecycleOwner) { viewState ->
+//            updateUI(viewState)
+//        }
         viewModel.cartEvents.observeEvent(viewLifecycleOwner) {
             it?.let {
                 updateUiForEvent(it)
