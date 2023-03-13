@@ -11,14 +11,20 @@ import com.renarosantos.ecommerceapp.product_list.presentation.ProductCardViewSt
 @Composable
 fun ProductList(
     cards: List<ProductCardViewState>,
-    onClick: (viewState : ProductCardViewState) -> Unit
+    onClick: (viewState: ProductCardViewState) -> Unit,
+    onFavoriteClick: (viewState: ProductCardViewState) -> Unit,
+    onCartClick: (viewState: ProductCardViewState) -> Unit
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = 140.dp)) {
-        items(cards){
-            ProductCardItem(viewState = it) {
-                onClick(it)
-            }
+        columns = GridCells.Adaptive(minSize = 140.dp)
+    ) {
+        items(cards) {
+            ProductCardItem(
+                viewState = it,
+                onClick = { onClick(it) },
+                onFavoriteClick = { onFavoriteClick(it) },
+                onCartClick = { onCartClick(it) },
+            )
         }
     }
 }
@@ -37,5 +43,5 @@ fun List() {
             false,
             false
         )
-    }) {}
+    },{},{},{})
 }

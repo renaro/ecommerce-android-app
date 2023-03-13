@@ -108,5 +108,18 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
+    fun onCartClicked(id: String) {
+        viewModelScope.launch(dispatcher) {
+            if (cartRepository.observeChanges().first().contains(id)) {
+                println("Removing from cart")
+                cartRepository.removeFromCart(id)
+            } else {
+                println("Adding to Cart from cart")
+                cartRepository.addToCart(id)
+                cartEvents.postValue(AddToCartEvent(true))
+            }
+        }
+    }
+
     data class AddToCartEvent(val isSuccess: Boolean)
 }

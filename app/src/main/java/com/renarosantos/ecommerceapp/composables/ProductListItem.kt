@@ -1,8 +1,9 @@
-@file:OptIn(ExperimentalGlideComposeApi::class)
+@file:OptIn(ExperimentalGlideComposeApi::class, ExperimentalGlideComposeApi::class)
 
 package com.renarosantos.ecommerceapp.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -24,7 +25,12 @@ import com.renarosantos.ecommerceapp.product_list.presentation.ProductCardViewSt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductCardItem(viewState: ProductCardViewState, onClick: () -> Unit) {
+fun ProductCardItem(
+    viewState: ProductCardViewState,
+    onClick: () -> Unit,
+    onFavoriteClick: () -> Unit,
+    onCartClick: () -> Unit
+) {
     Card(onClick = onClick, modifier = Modifier.padding(8.dp)) {
         if (LocalInspectionMode.current) { // if Preview
             Image(
@@ -77,7 +83,12 @@ fun ProductCardItem(viewState: ProductCardViewState, onClick: () -> Unit) {
                 painter = painterResource(id = imageId),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(color = Color.Red),
-                modifier = Modifier.align(Alignment.CenterStart)
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .size(24.dp)
+                    .clickable {
+                        onFavoriteClick()
+                    }
             )
             Text(
                 viewState.price,
@@ -88,7 +99,7 @@ fun ProductCardItem(viewState: ProductCardViewState, onClick: () -> Unit) {
             )
         }
         Button(
-            onClick = onClick,
+            onClick = onCartClick,
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEC5659)),
             modifier = Modifier
                 .fillMaxWidth()
@@ -106,7 +117,7 @@ fun ProductCardItem(viewState: ProductCardViewState, onClick: () -> Unit) {
             )
             Text(
                 text = stringResource(
-                    id = if (viewState.isFavorite) {
+                    id = if (!viewState.isProductInCart) {
                         string.add_to_cart
                     } else string.remove
                 )
@@ -127,7 +138,7 @@ fun Preview() {
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/androidecommercesample.appspot.com/o/playstation_1.png?alt=media&token=1414f40e-23cf-4f44-b922-e12bfcfca9f3",
             isFavorite = false,
             isProductInCart = false
-        )
-    ) {}
+        ), {}, {}, {}
+    )
 }
 

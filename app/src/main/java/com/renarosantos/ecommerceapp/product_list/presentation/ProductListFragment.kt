@@ -4,7 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -39,13 +46,27 @@ class ProductListFragment : Fragment() {
                 val state = viewModel.viewState.collectAsState()
                 when (val value = state.value) {
                     is ProductListViewState.Content -> {
-                        ProductList(cards = value.productList) {}
+                        ProductList(
+                            cards = value.productList,
+                            onClick = { viewModel.favoriteIconClicked(it.id) },
+                            onFavoriteClick = { viewModel.favoriteIconClicked(it.id) },
+                            onCartClick = { viewModel.onCartClicked(it.id) }
+                        )
                     }
                     ProductListViewState.Error -> {
 
                     }
                     ProductListViewState.Loading -> {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator()
 
+                        }
                     }
                 }
             }
@@ -68,7 +89,11 @@ class ProductListFragment : Fragment() {
 
     private fun updateUiForEvent(it: ProductListViewModel.AddToCartEvent) {
         if (it.isSuccess) {
-            Snackbar.make(binding.coordinator, "Product added to the cart!", Snackbar.LENGTH_SHORT)
+            Snackbar.make(
+                binding.coordinator,
+                "Product added to the cart!",
+                Snackbar.LENGTH_SHORT
+            )
                 .show()
         } else {
             Snackbar.make(
